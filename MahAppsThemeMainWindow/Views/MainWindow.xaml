@@ -40,7 +40,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ValueStringColumn" DataType="col:DictionaryEntry">
-            <TextBox IsReadOnly="True" BorderBrush="{x:Null}"
+            <TextBox IsReadOnly="True" BorderBrush="{x:Null}" Background="{x:Null}"
                      Text="{Binding Value, Converter={StaticResource MediaItemToStringConverter}}" />
         </DataTemplate>
 
