@@ -159,4 +159,5 @@ namespace MahAppsThemeMainWindow.ViewModels
 
 // TODO: Implement Color Edit & Brush Edit
 // TODO: Implement Hue, Brighness, Opacity, Saturation adjust
-// TODO: Why program not end
+// TODO: Why program not end - solved
+// TODO: Resource values does not change or changes isn't shown
