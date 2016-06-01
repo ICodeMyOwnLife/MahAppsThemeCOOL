@@ -1,15 +1,29 @@
 ﻿<Application x:Class="MahAppsThemeMainWindow.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:controls="http://wpf.cb.com/xaml"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-         <ResourceDictionary>
-             <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/CB.WPF.Resources.MahApps;component/Styles.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/styles/accents/blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
-             
-             <Thickness x:Key="NormalMargin">8</Thickness>
-         </ResourceDictionary>
+
+            <Thickness x:Key="NormalMargin">8</Thickness>
+
+            <Style x:Key="DialogButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                <Setter Property="MinWidth" Value="80" />
+            </Style>
+
+            <Style TargetType="controls:DialogContentControl">
+                <Setter Property="Margin" Value="{StaticResource NormalMargin}" />
+            </Style>
+
+            <Style x:Key="DialogWindowStyle" TargetType="mah:MetroWindow" BasedOn="{StaticResource MetroWindowStyle}">
+                <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

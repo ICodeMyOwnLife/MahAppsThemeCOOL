@@ -218,6 +218,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Page Include="Views\BrushPickerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ColorPickerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -229,6 +233,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\BrushPickerWindow.xaml.cs">
+      <DependentUpon>BrushPickerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ColorPickerWindow.xaml.cs">
       <DependentUpon>ColorPickerWindow.xaml</DependentUpon>
@@ -282,6 +289,10 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Libraries\DotNet\CB.IO\CB.IO.Common\CB.IO.Common.csproj">
+      <Project>{65789d31-922e-4801-a486-99c06827448c}</Project>
+      <Name>CB.IO.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\DotNet\CB.Model\CB.Model.Common\CB.Model.Common.csproj">
       <Project>{33A5DF99-1312-4023-A6EF-EABB9848F5A6}</Project>
       <Name>CB.Model.Common</Name>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahAppsThemeMainWindow", "MahAppsThemeMainWindow\MahAppsThemeMainWindow.csproj", "{47C0CD98-C609-4B5C-AEC8-AA1F20828E8A}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CB.Prism.Interactivity", "..\..\..\Libraries\DotNet\CB.Prism\CB.Prism.Interactivity\CB.Prism.Interactivity.csproj", "{640C072B-F368-4D76-9969-9C6BFE4070D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CB.Wpf.Controls", "..\..\..\Libraries\DotNet\CB.WPF\CB.Wpf.Controls\CB.Wpf.Controls.csproj", "{40DDC946-CD13-4734-990F-FBFF6914652E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CB.IO.Common", "..\..\..\Libraries\DotNet\CB.IO\CB.IO.Common\CB.IO.Common.csproj", "{65789D31-922E-4801-A486-99C06827448C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,14 @@ Global
 		{40DDC946-CD13-4734-990F-FBFF6914652E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{40DDC946-CD13-4734-990F-FBFF6914652E}.Release|x86.ActiveCfg = Release|Any CPU
 		{40DDC946-CD13-4734-990F-FBFF6914652E}.Release|x86.Build.0 = Release|Any CPU
+		{65789D31-922E-4801-A486-99C06827448C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65789D31-922E-4801-A486-99C06827448C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65789D31-922E-4801-A486-99C06827448C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{65789D31-922E-4801-A486-99C06827448C}.Debug|x86.Build.0 = Debug|Any CPU
+		{65789D31-922E-4801-A486-99C06827448C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65789D31-922E-4801-A486-99C06827448C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65789D31-922E-4801-A486-99C06827448C}.Release|x86.ActiveCfg = Release|Any CPU
+		{65789D31-922E-4801-A486-99C06827448C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

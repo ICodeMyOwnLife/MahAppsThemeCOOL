@@ -12,7 +12,7 @@
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                  xmlns:prm="http://prismlibrary.com/"
-                 xmlns:lov="clr-namespace:Lovatts.ColorEditor;assembly=Lovatts.ColorEditor"
+                 xmlns:views="clr-namespace:MahAppsThemeMainWindow.Views"
                  mc:Ignorable="d"
                  Title="MainWindow" Height="640" Width="1200">
 
@@ -57,12 +57,7 @@
         <prm:InteractionRequestTrigger SourceObject="{Binding ColorRequest}">
             <xaml:WindowTriggerAction CenterOverAssociatedObject="True" IsModal="True">
                 <xaml:WindowTriggerAction.Window>
-                    <mah:MetroWindow Style="{StaticResource MetroWindowStyle}" SizeToContent="WidthAndHeight">
-                        <xaml:DialogContentControl>
-                            <!--<lov:ColorEditor />-->
-                            <Rectangle Width="360" Height="120"></Rectangle>
-                        </xaml:DialogContentControl>
-                    </mah:MetroWindow>
+                    <views:ColorPickerWindow />
                 </xaml:WindowTriggerAction.Window>
             </xaml:WindowTriggerAction>
         </prm:InteractionRequestTrigger>
@@ -70,13 +65,13 @@
         <prm:InteractionRequestTrigger SourceObject="{Binding BrushRequest}">
             <xaml:WindowTriggerAction CenterOverAssociatedObject="True" IsModal="True">
                 <xaml:WindowTriggerAction.Window>
-                    <mah:MetroWindow Style="{StaticResource MetroWindowStyle}">
-                        <xaml:DialogContentControl>
-                            <lov:BrushEditor />
-                        </xaml:DialogContentControl>
-                    </mah:MetroWindow>
+                    <views:BrushPickerWindow />
                 </xaml:WindowTriggerAction.Window>
             </xaml:WindowTriggerAction>
+        </prm:InteractionRequestTrigger>
+
+        <prm:InteractionRequestTrigger SourceObject="{Binding SaveFileRequest}">
+            <xaml:WindowTriggerAction CenterOverAssociatedObject="True" IsModal="True" />
         </prm:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 
@@ -86,22 +81,41 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Row="0" Grid.Column="0" MinWidth="120"
-                 ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}"
-                 ItemTemplate="{StaticResource FileNameTemplate}" />
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <DataGrid x:Name="datMain" Grid.Row="0" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="True"
-                  ItemsSource="{Binding Resources}">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Name" CellTemplate="{StaticResource NameColumn}" />
-                <DataGridTemplateColumn Header="Presentation" CellTemplate="{StaticResource ValueColumn}" />
-                <DataGridTemplateColumn Header="Value" CellTemplate="{StaticResource ValueStringColumn}" />
-            </DataGrid.Columns>
-        </DataGrid>
+            <GroupBox Grid.Row="0" Grid.Column="0" Header="Files">
+                <ListBox MinWidth="150"
+                         ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}"
+                         ItemTemplate="{StaticResource FileNameTemplate}" />
+            </GroupBox>
+
+            <GroupBox Grid.Row="0" Grid.Column="1">
+                <DataGrid x:Name="datMain" AutoGenerateColumns="False" IsReadOnly="True"
+                          ItemsSource="{Binding Resources}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Name" CellTemplate="{StaticResource NameColumn}" />
+                        <DataGridTemplateColumn Header="Presentation" CellTemplate="{StaticResource ValueColumn}" />
+                        <DataGridTemplateColumn Header="Value" CellTemplate="{StaticResource ValueStringColumn}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="Reload" Command="{Binding ReloadFilesCommand}" />
+            
+            <Button Grid.Column="2" Content="Save As" Command="{Binding SaveAsCommand}" />
+        </Grid>
     </Grid>
 </mah:MetroWindow>

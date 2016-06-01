@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using BrushEditor;
+using CB.IO.Common;
 using CB.Model.Prism;
 using CB.Prism.Interactivity;
 using MahAppsThemeInfrastructure;
@@ -29,7 +30,16 @@ namespace MahAppsThemeMainWindow.ViewModels
         {
             ReloadFiles();
             EditMediaCommand = new DelegateCommand<object>(EditMedia);
+            ReloadFilesCommand = new DelegateCommand(ReloadFiles);
+            SaveAsCommand = new DelegateCommand(SaveAs);
         }
+        #endregion
+
+
+        #region  Commands
+        public ICommand EditMediaCommand { get; }
+        public ICommand ReloadFilesCommand { get; }
+        public ICommand SaveAsCommand { get; }
         #endregion
 
 
@@ -40,8 +50,6 @@ namespace MahAppsThemeMainWindow.ViewModels
         public ConfirmationInteractionRequest<ColorPickerViewModel> ColorRequest { get; } =
             new ConfirmationInteractionRequest<ColorPickerViewModel>();
 
-        public ICommand EditMediaCommand { get; }
-
         public IList<string> Files { get; } = new ObservableCollection<string>();
 
         public ResourceDictionary Resources
@@ -50,6 +58,9 @@ namespace MahAppsThemeMainWindow.ViewModels
             private set { SetProperty(ref _resources, value); }
         }
 
+        public ConfirmationInteractionRequest<SaveFileDialogInfo> SaveFileRequest { get; } =
+            new ConfirmationInteractionRequest<SaveFileDialogInfo>();
+
         public string SelectedFile
         {
             get { return _selectedFile; }
@@ -57,7 +68,7 @@ namespace MahAppsThemeMainWindow.ViewModels
             {
                 if (SetProperty(ref _selectedFile, value) && !string.IsNullOrEmpty(value))
                 {
-                    Resources = ResourceReader.Read(value);
+                    Resources = ResourceDictionaryHandler.Read(value);
                 }
             }
         }
@@ -109,13 +120,43 @@ namespace MahAppsThemeMainWindow.ViewModels
         public void ReloadFiles()
         {
             Files.Clear();
-            var filesFolder = ConfigurationManager.AppSettings["files"];
-            foreach (var file in Directory.EnumerateFiles(Path.GetFullPath(filesFolder)))
+            foreach (var file in Directory.EnumerateFiles(GetDefaultFolderPath()))
             {
                 Files.Add(file);
             }
             SelectedFile = Files.FirstOrDefault();
         }
+
+        public void SaveAs()
+        {
+            var saveInfo = new SaveFileDialogInfo
+            {
+                InitialDirectory = GetDefaultFolderPath(),
+                Filter = "Resource Dictionary (*.xaml)|*.xaml"
+            };
+
+            SaveFileRequest.Raise(saveInfo, res =>
+            {
+                if (!res.Confirmed) return;
+
+                var file = res.FileName;
+                ResourceDictionaryHandler.Write(Resources, file);
+                Files.Add(file);
+                SelectedFile = file;
+                IO.OpenExplorerToShow(file);
+            });
+        }
+        #endregion
+
+
+        #region Implementation
+        private static string GetDefaultFolderPath()
+            => Path.GetFullPath(ConfigurationManager.AppSettings["files"]);
         #endregion
     }
 }
+
+
+// TODO: Implement Color Edit & Brush Edit
+// TODO: Implement Hue, Brighness, Opacity, Saturation adjust
+// TODO: Why program not end

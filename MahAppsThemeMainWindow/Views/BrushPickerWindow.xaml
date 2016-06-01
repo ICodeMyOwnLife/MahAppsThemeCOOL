@@ -1,19 +1,18 @@
-﻿<mah:MetroWindow x:Class="MahAppsThemeMainWindow.Views.ColorPickerWindow"
+﻿<mah:MetroWindow x:Class="MahAppsThemeMainWindow.Views.BrushPickerWindow"
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                 xmlns:lov="clr-namespace:Lovatts.ColorEditor;assembly=Lovatts.ColorEditor"
+                 xmlns:colorEditor="clr-namespace:Lovatts.ColorEditor;assembly=Lovatts.ColorEditor"
                  xmlns:xaml="http://wpf.cb.com/xaml"
                  mc:Ignorable="d"
-                 Title="Color Picker" Style ="{StaticResource DialogWindowStyle}">
-    
+                 Title="Color Picker" Style="{StaticResource DialogWindowStyle}">
+
     <xaml:DialogContentControl>
         <xaml:DialogContentControl.Resources>
             <Style TargetType="Button" BasedOn="{StaticResource DialogButtonStyle}" />
         </xaml:DialogContentControl.Resources>
-
-        <lov:ColorEditor />
+        <colorEditor:BrushEditor />
     </xaml:DialogContentControl>
 </mah:MetroWindow>
