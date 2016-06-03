@@ -1,17 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using BrushEditor;
 using CB.IO.Common;
 using CB.Model.Prism;
 using CB.Prism.Interactivity;
-using MahAppsThemeInfrastructure;
 using Microsoft.Practices.Prism.Commands;
 
 
@@ -20,7 +15,18 @@ namespace MahAppsThemeMainWindow.ViewModels
     public class MainViewModel: PrismViewModelBase
     {
         #region Fields
-        private ResourceDictionary _resources;
+        /*public ResourceDictionary Resources
+        {
+            get { return _resources; }
+            private set { SetProperty(ref _resources, value); }
+        }*/
+
+        private ResourceViewModel _resources;
+
+        private readonly IDictionary<string, ResourceViewModel> _resourcesMap =
+            new Dictionary<string, ResourceViewModel>();
+
+        //private ResourceDictionary _resources;
         private string _selectedFile;
         #endregion
 
@@ -36,13 +42,6 @@ namespace MahAppsThemeMainWindow.ViewModels
         #endregion
 
 
-        #region  Commands
-        public ICommand EditMediaCommand { get; }
-        public ICommand ReloadFilesCommand { get; }
-        public ICommand SaveAsCommand { get; }
-        #endregion
-
-
         #region  Properties & Indexers
         public ConfirmationInteractionRequest<LinearGradientBrushPickerViewModel> BrushRequest { get; } =
             new ConfirmationInteractionRequest<LinearGradientBrushPickerViewModel>();
@@ -52,7 +51,7 @@ namespace MahAppsThemeMainWindow.ViewModels
 
         public IList<string> Files { get; } = new ObservableCollection<string>();
 
-        public ResourceDictionary Resources
+        public ResourceViewModel Resources
         {
             get { return _resources; }
             private set { SetProperty(ref _resources, value); }
@@ -68,7 +67,8 @@ namespace MahAppsThemeMainWindow.ViewModels
             {
                 if (SetProperty(ref _selectedFile, value) && !string.IsNullOrEmpty(value))
                 {
-                    Resources = ResourceDictionaryHandler.Read(value);
+                    //Resources = ResourceDictionaryHandler.Read(value);
+                    Resources = GetResources(value);
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace MahAppsThemeMainWindow.ViewModels
         #region Methods
         public void EditMedia(object cmdParameter)
         {
-            var entry = (DictionaryEntry)cmdParameter;
+            /*var entry = (DictionaryEntry)cmdParameter;
             var lgb = entry.Value as LinearGradientBrush;
             if (lgb != null)
             {
@@ -114,7 +114,7 @@ namespace MahAppsThemeMainWindow.ViewModels
                             Resources[entry.Key] = res.ColorEditorViewModel.Color;
                         }
                     });
-            }
+            }*/
         }
 
         public void ReloadFiles()
@@ -140,7 +140,9 @@ namespace MahAppsThemeMainWindow.ViewModels
                 if (!res.Confirmed) return;
 
                 var file = res.FileName;
-                ResourceDictionaryHandler.Write(Resources, file);
+
+                //ResourceDictionaryHandler.Write(Resources, file);
+                Resources.WriteToFile(file);
                 Files.Add(file);
                 SelectedFile = file;
                 IO.OpenExplorerToShow(file);
@@ -152,6 +154,24 @@ namespace MahAppsThemeMainWindow.ViewModels
         #region Implementation
         private static string GetDefaultFolderPath()
             => Path.GetFullPath(ConfigurationManager.AppSettings["files"]);
+
+        private ResourceViewModel GetResources(string path)
+        {
+            ResourceViewModel result;
+            if (!_resourcesMap.TryGetValue(path, out result))
+            {
+                result = new ResourceViewModel(path);
+                _resourcesMap[path] = result;
+            }
+            return result;
+        }
+        #endregion
+
+
+        #region  Commands
+        public ICommand EditMediaCommand { get; }
+        public ICommand ReloadFilesCommand { get; }
+        public ICommand SaveAsCommand { get; }
         #endregion
     }
 }

@@ -89,6 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\ResourceValue.cs" />
     <Compile Include="ViewModels\ColorPickerViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Converters\MediaItemToStringConverter.cs" />
@@ -234,6 +235,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\ResourceViewModel.cs" />
     <Compile Include="Views\BrushPickerWindow.xaml.cs">
       <DependentUpon>BrushPickerWindow.xaml</DependentUpon>
     </Compile>

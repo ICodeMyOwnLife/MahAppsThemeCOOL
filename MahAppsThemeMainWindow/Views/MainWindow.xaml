@@ -81,29 +81,43 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Row="0" Grid.Column="0" Header="Files">
+            <GroupBox Grid.Column="0" Header="Files">
                 <ListBox MinWidth="150"
                          ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}"
                          ItemTemplate="{StaticResource FileNameTemplate}" />
             </GroupBox>
 
-            <GroupBox Grid.Row="0" Grid.Column="1">
-                <DataGrid x:Name="datMain" AutoGenerateColumns="False" IsReadOnly="True"
-                          ItemsSource="{Binding Resources}">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Name" CellTemplate="{StaticResource NameColumn}" />
-                        <DataGridTemplateColumn Header="Presentation" CellTemplate="{StaticResource ValueColumn}" />
-                        <DataGridTemplateColumn Header="Value" CellTemplate="{StaticResource ValueStringColumn}" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </GroupBox>
+            <Grid Grid.Column="1" DataContext="{Binding Resources}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <GroupBox Grid.Row="0" Header="Resources">
+                    <DataGrid x:Name="datMain" AutoGenerateColumns="False" IsReadOnly="True"
+                              ItemsSource="{Binding ResourceValues}">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Name" CellTemplate="{StaticResource NameColumn}" />
+                            <DataGridTemplateColumn Header="Presentation" CellTemplate="{StaticResource ValueColumn}" />
+                            <DataGridTemplateColumn Header="Value" CellTemplate="{StaticResource ValueStringColumn}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+
+                <GroupBox Grid.Row="1" Header="Edit">
+                    <Grid>
+                        <Slider Style="{StaticResource SliderStyle.One}"
+                                Value="{Binding Brighness}" />
+                    </Grid>
+                </GroupBox>
+            </Grid>
+
         </Grid>
 
         <Grid Grid.Row="1">
@@ -114,7 +128,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Content="Reload" Command="{Binding ReloadFilesCommand}" />
-            
+
             <Button Grid.Column="2" Content="Save As" Command="{Binding SaveAsCommand}" />
         </Grid>
     </Grid>
