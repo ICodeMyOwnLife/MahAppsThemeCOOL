@@ -14,7 +14,7 @@
                  xmlns:prm="http://prismlibrary.com/"
                  xmlns:views="clr-namespace:MahAppsThemeMainWindow.Views"
                  mc:Ignorable="d"
-                 Title="MainWindow" Height="640" Width="1200">
+                 Title="MahApps Theme COOL" Height="640" Width="1200" Style="{StaticResource MetroWindowStyle}">
 
     <Window.Resources>
         <vmd:MainViewModel x:Key="MainViewModel" />
@@ -90,7 +90,11 @@
             <GroupBox Grid.Column="0" Header="Files">
                 <ListBox MinWidth="150"
                          ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}"
-                         ItemTemplate="{StaticResource FileNameTemplate}" />
+                         ItemTemplate="{StaticResource FileNameTemplate}">
+                    <i:Interaction.Behaviors>
+                        <xaml:ScrollToSelectedItemBehavior />
+                    </i:Interaction.Behaviors>
+                </ListBox>
             </GroupBox>
 
             <Grid Grid.Column="1" DataContext="{Binding Resources}">

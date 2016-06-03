@@ -8,7 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/CB.WPF.Resources.MahApps;component/Styles.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/styles/accents/blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/styles/accents/taupe.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Thickness x:Key="NormalMargin">8</Thickness>

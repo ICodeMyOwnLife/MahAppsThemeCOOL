@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using CB.Media.Brushes;
 using CB.Model.Prism;
 using MahAppsThemeInfrastructure;
 using MahAppsThemeMainWindow.Models;
@@ -39,17 +40,15 @@ namespace MahAppsThemeMainWindow.ViewModels
                 {
                     foreach (var resource in ResourceValues)
                     {
-                        if (resource.Value is Color)
+                        if (resource.Value is Color || resource.Value is SolidColorBrush || resource.Value is LinearGradientBrush || resource.Value is RadialGradientBrush)
                         {
-                            resource.Value = value > 0 ? Colors.White : value < 0 ? Colors.Black : _source[resource];
+                            dynamic media = _source[resource.Key];
+                            resource.Value = BrushHelper.SetBrightness(media, value);
                         }
                     }
                 }
             }
         }
-
-        private static Color AdjustBrightness(Color color, double brightness)
-            => brightness > 0 ? Colors.White : brightness < 0 ? Colors.Black : color; // UNDONE: AdjustBrightness
 
         public IEnumerable<ResourceValue> ResourceValues { get; }
         #endregion
@@ -61,7 +60,7 @@ namespace MahAppsThemeMainWindow.ViewModels
             var resourceDict = new ResourceDictionary();
             foreach (var value in ResourceValues)
             {
-                resourceDict[value.Key] = resourceDict[value.Value];
+                resourceDict.Add(value.Key, value.Value);
             }
             ResourceDictionaryHandler.Write(resourceDict, filePath);
         }
