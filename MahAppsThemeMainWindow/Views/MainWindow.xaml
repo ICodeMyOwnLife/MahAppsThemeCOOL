@@ -1,11 +1,11 @@
-﻿<mah:MetroWindow x:Class="MahAppsThemeMainWindow.Views.MainWindow"
+﻿<mah:MetroWindow xmlns:dxprg="http://schemas.devexpress.com/winfx/2008/xaml/propertygrid"
+                 xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+                 x:Class="MahAppsThemeMainWindow.Views.MainWindow"
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
-                 xmlns:cvt="clr-namespace:MahAppsThemeMainWindow.Converters"
-                 xmlns:attachedProperties="clr-namespace:MahAppsThemeMainWindow.AttachedProperties"
                  xmlns:vmd="clr-namespace:MahAppsThemeMainWindow.ViewModels"
                  xmlns:xaml="http://wpf.cb.com/xaml"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -13,30 +13,36 @@
                  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                  xmlns:prm="http://prismlibrary.com/"
                  xmlns:views="clr-namespace:MahAppsThemeMainWindow.Views"
+                 xmlns:mdl="clr-namespace:MahAppsThemeMainWindow.Models"
+                 xmlns:helpers="clr-namespace:MahAppsThemeMainWindow.XamlHelpers"
+                 xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
                  mc:Ignorable="d"
-                 Title="MahApps Theme COOL" Height="640" Width="1200" Style="{StaticResource MetroWindowStyle}">
+                 Title="MahApps Theme COOL" Height="640" Width="1200" Style="{StaticResource MetroWindowStyle}"
+                 dx:ThemeManager.ThemeName="Office2013">
 
     <Window.Resources>
         <vmd:MainViewModel x:Key="MainViewModel" />
+        
+        <sys:Double x:Key="RectangleWidth">240</sys:Double>
 
         <xaml:FileSystemPathConverter x:Key="PathConverter" ConversionType="FileName" />
 
-        <cvt:MediaItemToStringConverter x:Key="MediaItemToStringConverter" />
+        <helpers:MediaItemToStringConverter x:Key="MediaItemToStringConverter" />
 
-        <DataTemplate x:Key="NameColumn" DataType="col:DictionaryEntry">
+        <DataTemplate x:Key="NameColumn" DataType="mdl:ResourceValue">
             <TextBlock Text="{Binding Key}" />
         </DataTemplate>
 
-        <DataTemplate x:Key="ValueColumn" DataType="col:DictionaryEntry">
-            <Rectangle Height="60" Width="60" attachedProperties:MediaServices.MediaItem="{Binding Value}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                        <prm:InvokeCommandAction
-                            Command="{Binding Source={StaticResource MainViewModel}, Path=EditMediaCommand}"
-                            CommandParameter="{Binding}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Rectangle>
+        <DataTemplate x:Key="ValueColumn" DataType="mdl:ResourceValue">
+            <Rectangle Height="20" Width="{StaticResource RectangleWidth}" helpers:MediaServices.MediaItem="{Binding Value}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="ColorEditColumn" DataType="mdl:ResourceValue">
+            <dxe:PopupColorEdit Width="{StaticResource RectangleWidth}" Color="{Binding Value, Mode=TwoWay}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="BrushEditColumn" DataType="mdl:ResourceValue">
+            <dxprg:PopupBrushEdit Width="{StaticResource RectangleWidth}" EditValue="{Binding Value, Mode=TwoWay}" />
         </DataTemplate>
 
         <DataTemplate x:Key="ValueStringColumn" DataType="col:DictionaryEntry">
@@ -47,6 +53,8 @@
         <DataTemplate x:Key="FileNameTemplate" DataType="sys:String">
             <TextBlock Text="{Binding Converter={StaticResource PathConverter}}" />
         </DataTemplate>
+
+        <helpers:ResourceValueEditTemplateSelector x:Key="ResourceValueEditTemplateSelector" />
     </Window.Resources>
 
     <Window.DataContext>
@@ -104,12 +112,11 @@
                 </Grid.RowDefinitions>
 
                 <GroupBox Grid.Row="0" Header="Resources">
-                    <DataGrid x:Name="datMain" AutoGenerateColumns="False" IsReadOnly="True"
+                    <DataGrid x:Name="datMain" AutoGenerateColumns="False"
                               ItemsSource="{Binding ResourceValues}">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Name" CellTemplate="{StaticResource NameColumn}" />
-                            <DataGridTemplateColumn Header="Presentation" CellTemplate="{StaticResource ValueColumn}" />
-                            <DataGridTemplateColumn Header="Value" CellTemplate="{StaticResource ValueStringColumn}" />
+                            <DataGridTemplateColumn Header="Name" CellTemplate="{StaticResource NameColumn}" SortMemberPath="Key" />
+                            <DataGridTemplateColumn Header="Value" CellTemplate="{StaticResource ValueColumn}" CellEditingTemplateSelector="{StaticResource ResourceValueEditTemplateSelector}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </GroupBox>

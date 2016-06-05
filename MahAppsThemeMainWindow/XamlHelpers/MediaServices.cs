@@ -5,7 +5,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 
 
-namespace MahAppsThemeMainWindow.AttachedProperties
+namespace MahAppsThemeMainWindow.XamlHelpers
 {
     public static class MediaServices
     {
@@ -17,7 +17,7 @@ namespace MahAppsThemeMainWindow.AttachedProperties
         [Category("MediaServices")]
         [AttachedPropertyBrowsableForType(typeof(FrameworkElement))]
         public static object GetMediaItem(DependencyObject d)
-            => (object)d.GetValue(MediaItemProperty);
+            => d.GetValue(MediaItemProperty);
 
         [Category("MediaServices")]
         [AttachedPropertyBrowsableForType(typeof(FrameworkElement))]

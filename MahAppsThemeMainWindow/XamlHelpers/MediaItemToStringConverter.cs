@@ -6,7 +6,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 
 
-namespace MahAppsThemeMainWindow.Converters
+namespace MahAppsThemeMainWindow.XamlHelpers
 {
     public class MediaItemToStringConverter: IValueConverter
     {

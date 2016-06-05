@@ -35,7 +35,6 @@ namespace MahAppsThemeMainWindow.ViewModels
         public MainViewModel()
         {
             ReloadFiles();
-            EditMediaCommand = new DelegateCommand<object>(EditMedia);
             ReloadFilesCommand = new DelegateCommand(ReloadFiles);
             SaveAsCommand = new DelegateCommand(SaveAs);
         }
@@ -76,47 +75,6 @@ namespace MahAppsThemeMainWindow.ViewModels
 
 
         #region Methods
-        public void EditMedia(object cmdParameter)
-        {
-            /*var entry = (DictionaryEntry)cmdParameter;
-            var lgb = entry.Value as LinearGradientBrush;
-            if (lgb != null)
-            {
-                BrushRequest.Raise(new LinearGradientBrushPickerViewModel { Brush = lgb }, res =>
-                {
-                    if (res.Confirmed)
-                    {
-                        Resources[entry.Key] = res.Brush;
-                    }
-                });
-            }
-            else
-            {
-                Color color;
-                if (entry.Value is Color)
-                {
-                    color = (Color)entry.Value;
-                }
-                else if (entry.Value is SolidColorBrush)
-                {
-                    color = ((SolidColorBrush)entry.Value).Color;
-                }
-                else
-                {
-                    return;
-                }
-                ColorRequest.Raise(
-                    new ColorPickerViewModel { ColorEditorViewModel = new ColorEditorViewModel { Color = color } },
-                    res =>
-                    {
-                        if (res.Confirmed)
-                        {
-                            Resources[entry.Key] = res.ColorEditorViewModel.Color;
-                        }
-                    });
-            }*/
-        }
-
         public void ReloadFiles()
         {
             Files.Clear();
@@ -169,7 +127,6 @@ namespace MahAppsThemeMainWindow.ViewModels
 
 
         #region  Commands
-        public ICommand EditMediaCommand { get; }
         public ICommand ReloadFilesCommand { get; }
         public ICommand SaveAsCommand { get; }
         #endregion

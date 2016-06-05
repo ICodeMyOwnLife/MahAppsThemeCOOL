@@ -43,7 +43,7 @@ namespace MahAppsThemeMainWindow.ViewModels
                         if (resource.Value is Color || resource.Value is SolidColorBrush || resource.Value is LinearGradientBrush || resource.Value is RadialGradientBrush)
                         {
                             dynamic media = _source[resource.Key];
-                            resource.Value = BrushHelper.SetBrightness(media, value);
+                            resource.Value = BrushHelper.AdjustBrightness(media, value);
                         }
                     }
                 }
